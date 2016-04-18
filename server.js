@@ -15,12 +15,12 @@ app.get('/:input', function(req, res) {
         input = +input
     }
     
-    var date = new Date(input);
+    var date = new Date( ( input === 'today' ? Date.now() : input ) )
     var result = {
         unix: date.getTime(),
         natural: date.toDateString()
     };
-    
+
     res.send(JSON.stringify(result));
 });
 
