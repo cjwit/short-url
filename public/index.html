@@ -9,17 +9,23 @@
 	<body>
 		<div class="container">
 			<h1>Timestamper</h1>
-			<div class = 'row'>
-				<div class = 'col-sm-6'>
 					<h3>Usage:</h3>
 					Add a string containing either a natural language date () or UNIX timestamp to this application's URL.
-				</div>
-				<div class = 'col-sm-6'>
-					<h3>Example:</h3>
-					<code>https://api-projects-cjwit.c9users.io/December%30,%1981</code> for a natural date and 
-					<code>https://api-projects-cjwit.c9users.io/378518400</code> for a UNIX time.
-				</div>
-				
+					<h3>Example inputs:</h3>
+					<p>Unix time (milliseconds since January 1st, 1970</p>
+					<ul>
+						<li><code>https://api-projects-cjwit.c9users.io/378518400</code></li>
+					</ul>
+					<p>Other date strings (spaces work, as does <code>%20</code>):</p>
+					<ul>
+						<li><code>https://api-projects-cjwit.c9users.io/December 30, 1981</code></li>
+						<li><code>https://api-projects-cjwit.c9users.io/December%2030,%201981</code></li>
+						<li><code>https://api-projects-cjwit.c9users.io/30 December, 1981</code></li>
+						<li><code>https://api-projects-cjwit.c9users.io/30 Dec 1981</code></li>
+						<li><code>https://api-projects-cjwit.c9users.io/12 30 1981</code></li>
+						<li><code>https://api-projects-cjwit.c9users.io/12-30-1981</code></li>
+					</ul>
+
 		</div>
 	</body>
 

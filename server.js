@@ -12,14 +12,15 @@ app.get('/', function(req, res) {
 app.get('/:input', function(req, res) {
     var input = req.params.input;
 
-    if (Number(input)) {
-        var date = new Date(+input)
+    if (+input) {
+        input = +input
     }
-
+    
+    var date = new Date(input);
     var result = {
         unix: date.getTime(),
         natural: date.toDateString()
-    }
+    };
     
     res.send(JSON.stringify(result));
 });
