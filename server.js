@@ -3,7 +3,6 @@
 var express = require('express');
 
 var app = express();
-var port = 8080;
 
 app.get('/', function(req, res) {
 	res.sendFile(process.cwd() + '/public/index.html');
@@ -25,4 +24,4 @@ app.get('/:input', function(req, res) {
     res.send(JSON.stringify(result));
 });
 
-app.listen(port);
+app.listen(process.env.PORT || 8080);
