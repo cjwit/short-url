@@ -15,12 +15,9 @@ app.get('/new/:url', function(req, res) {
         var links = db.collection('links');
         var maxShortened;
         
-        links.find().sort({ shortened: -1 }).toArray(function(err, docs) {
-            if (err) return console.error(err);
-            maxShortened = docs;
-            console.log(maxShortened);
-            db.close()
-        })
+        maxShortened = links.find().sort({ shortened: -1 })
+        console.log(maxShortened);
+        db.close()
         
 //        var maxshortened = db.links.find().sort({shortened: -1}).limit(1).shortened || 0;
 /*            
