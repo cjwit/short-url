@@ -6,9 +6,10 @@ var Config = require('./config');
 var mongo = require('mongodb').MongoClient;
 var dburl = 'mongodb://' + Config.dblogin + ':' + Config.dbpassword + '@ds011241.mlab.com:11241/links'
 
-app.get('/new/:url', function(req, res) {
+app.get('/new/:url(*)', function(req, res) {
     var result = { original: req.params.url }
     if (!/\./.test(result.original)) return res.end(JSON.stringify({ error: "check your URL format" }))
+    if (!/http:\/\/|https:\/\//.test(result.original)) result.original = "http://" + result.original;
     
     mongo.connect(dburl, function(err, db) {
         if (err) return console.log(err);
@@ -23,7 +24,7 @@ app.get('/new/:url', function(req, res) {
             });
             
             res.send(JSON.stringify({
-                original: "http://" + result.original,
+                original: result.original,
                 shortened: "https://desolate-inlet-99642.herokuapp.com/" + result.shortened
                 }));
             db.close();
@@ -45,7 +46,7 @@ app.get('/:id', function(req, res) {
                 res.send('Invalid shortened url. If you meant to create a new one, add <code>/new/URL</code> (where URL is your target) to the end of the address.')
                 db.close();
             } else {
-                res.redirect('http://'+ doc[0].original);
+                res.redirect(doc[0].original);
                 res.end();
                 db.close();
             }

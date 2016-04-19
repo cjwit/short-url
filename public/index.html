@@ -3,33 +3,23 @@
 <html>
 
 	<head>
-		<title>Timestamp Microservice</title>
+		<title>URL Shortening Service</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	</head>
 	<body>
 		<div class="container">
-			<h1>Timestamper</h1>
+			<h1>URL Shortening Service</h1>
 					<h3>Usage:</h3>
-					Add a string containing either a natural language date () or UNIX timestamp to this application's URL.
-					<h3>Example inputs:</h3>
-					<p>Get the current date:</p>
+					Create shorter URLs! Well, they're still kinda long because I'm cheap and won't buy a domain.
+					<h3>To create a URL shortcut:</h3>
+					<p>Follow this service's URL with <code>/new</code> and the URL that you would like to shorten. You can include the <code>http://</code> or leave it out.</code></p>
 					<ul>
-						<li><code>http://polar-cliffs-58838.herokuapp.com/today</code></li>
+						<li>For example: <code>https://desolate-inlet-99642.herokuapp.com/new/www.iamthecoolestwebsiteever.com/scooooobiedoooobiedooooooo</code></li>
 					</ul>
-					<p>Unix time (milliseconds since January 1st, 1970</p>
-					<ul>
-						<li><code>http://polar-cliffs-58838.herokuapp.com/378518400</code></li>
-					</ul>
-					<p>Other date strings (spaces work, as does <code>%20</code>):</p>
-					<ul>
-						<li><code>http://polar-cliffs-58838.herokuapp.com/December 30, 1981</code></li>
-						<li><code>http://polar-cliffs-58838.herokuapp.com/December%2030,%201981</code></li>
-						<li><code>http://polar-cliffs-58838.herokuapp.com/30 December, 1981</code></li>
-						<li><code>http://polar-cliffs-58838.herokuapp.com/30 Dec 1981</code></li>
-						<li><code>http://polar-cliffs-58838.herokuapp.com/12 30 1981</code></li>
-						<li><code>http://polar-cliffs-58838.herokuapp.com/12-30-1981</code></li>
-					</ul>
-
+					<p>This will return a shortened URL for you to copy and bookmark.</p>
+					
+					<h3>To access your shortcut:</h3>
+					<p>Simply go to the shortened URL that you received and the service will redirect you to your website</p>
 		</div>
 	</body>
 
