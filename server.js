@@ -7,9 +7,7 @@ var dburl = 'mongodb://cj:loser@ds011241.mlab.com:11241/links'
 
 app.get('/new/:url', function(req, res) {
     var result = { original: req.params.url }
-        
-
-   if (!/\./.test(result.original)) return res.end(JSON.stringify({ error: "check your URL format" }))
+    if (!/\./.test(result.original)) return res.end(JSON.stringify({ error: "check your URL format" }))
     
     mongo.connect(dburl, function(err, db) {
         if (err) return console.log(err);
@@ -17,9 +15,8 @@ app.get('/new/:url', function(req, res) {
         var links = db.collection('links');
         links.find().sort({ shortened: -1}).toArray(function(err, docs) {
             if (err) return console.error(err);
-            var maxShortened = docs[0].shortened;
-            result.shortened = maxShortened + 1;
-            
+
+            result.shortened = docs[0].shortened + 1;
             links.insert(result, function(err) {
                 if (err) return console.error(err);
             });
@@ -31,11 +28,25 @@ app.get('/new/:url', function(req, res) {
 });
 
 app.get('/:id', function(req, res) {
-    var id = req.params.id;
-    
-    // if (id not in db) return res.end(JSON.stringify({ error: 'invalid shortened URL id' })
-    var url = 'google.com'
-    res.redirect('http://' + url)
+
+    mongo.connect(dburl, function(err, db) {
+        if (err) return console.error(err);
+        var links = db.collection('links');
+        var query = {};
+        query['shortened'] = +req.params.id;
+
+        links.find(query).toArray(function(err, doc) {
+            if (err) return console.error(err);
+            if (doc.length === 0) {
+                res.send('Invalid shortened url. If you meant to create a new one, add <code>/new/URL</code> (where URL is your target) to the end of the address.')
+                db.close();
+            } else {
+                res.redirect('http://'+ doc[0].original);
+                res.end();
+                db.close();
+            }
+        })
+    })
 });
 
 app.get('/', function(req, res) {
