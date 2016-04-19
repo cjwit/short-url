@@ -3,20 +3,28 @@
 var express = require('express');
 var app = express();
 
-app.get('/', function(req, res) {
-	res.sendFile(process.cwd() + '/public/index.html');
-});
-
 app.get('/new/:url', function(req, res) {
     var url = req.params.url;
-    var result = 'create new entry for ' + url;
-    res.end(result);
+    if (!/\./.test(url)) return res.end(JSON.stringify({ error: "check your URL format" }))
+    
+    var result = {
+        original: url,
+        shortened: 'id'
+    }
+    
+    res.end(JSON.stringify(result));
 });
 
-app.get('/:url', function(req, res) {
-    var url = req.params.url;
-    var result = 'redirect to entry for ' + url;
-    res.end(result);
+app.get('/:id', function(req, res) {
+    var id = req.params.id;
+    
+    // if (id not in db) return res.end(JSON.stringify({ error: 'invalid shortened URL id' })
+    var url = 'google.com'
+    res.redirect('http://' + url)
+});
+
+app.get('/', function(req, res) {
+	res.sendFile(process.cwd() + '/public/index.html');
 });
 
 var port = process.env.PORT || 8080;
