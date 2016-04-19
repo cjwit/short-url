@@ -2,8 +2,9 @@
 
 var express = require('express');
 var app = express();
+var Config = require('./config');
 var mongo = require('mongodb').MongoClient;
-var dburl = 'mongodb://cj:loser@ds011241.mlab.com:11241/links'
+var dburl = 'mongodb://' + Config.dblogin + ':' + Config.dbpassword + '@ds011241.mlab.com:11241/links'
 
 app.get('/new/:url', function(req, res) {
     var result = { original: req.params.url }
