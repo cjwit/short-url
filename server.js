@@ -22,7 +22,10 @@ app.get('/new/:url', function(req, res) {
                 if (err) return console.error(err);
             });
             
-            res.send(result);
+            res.send(JSON.stringify({
+                original: result.original,
+                shortened: result.shortened
+                }));
             db.close();
         });
     });
