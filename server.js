@@ -2,17 +2,41 @@
 
 var express = require('express');
 var app = express();
+var mongo = require('mongodb').MongoClient;
+var dburl = 'mongodb://cj:loser@ds011241.mlab.com:11241/links'
 
 app.get('/new/:url', function(req, res) {
     var url = req.params.url;
-    if (!/\./.test(url)) return res.end(JSON.stringify({ error: "check your URL format" }))
+
+//   if (!/\./.test(url)) return res.end(JSON.stringify({ error: "check your URL format" }))
     
-    var result = {
-        original: url,
-        shortened: 'id'
-    }
+    mongo.connect(dburl, function(err, db) {
+        if (err) return console.log(err);
+        var links = db.collection('links');
+        var maxShortened;
+        
+        links.find().sort({ shortened: -1 }).toArray(function(err, docs) {
+            if (err) return console.error(err);
+            maxShortened = docs;
+            console.log(maxShortened);
+            db.close()
+        })
+        
+//        var maxshortened = db.links.find().sort({shortened: -1}).limit(1).shortened || 0;
+/*            
+        var result = {
+            original: url,
+            shortened: 'id'
+        };
+
+        links.insert(result, function(err) {
+            if (err) return res.sent(err);
+            db.close();
+        });
+ */       
+    });
     
-    res.end(JSON.stringify(result));
+    res.end(url);
 });
 
 app.get('/:id', function(req, res) {
