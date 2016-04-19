@@ -23,8 +23,8 @@ app.get('/new/:url', function(req, res) {
             });
             
             res.send(JSON.stringify({
-                original: result.original,
-                shortened: result.shortened
+                original: "http://" + result.original,
+                shortened: "https://desolate-inlet-99642.herokuapp.com/" + result.shortened
                 }));
             db.close();
         });
