@@ -9,12 +9,16 @@ app.get('/', function(req, res) {
 
 app.get('/new/:url', function(req, res) {
     var url = req.params.url;
-    res.send('create new entry for ', url);
+    var result = 'create new entry for ' + url;
+    res.end(result);
 });
 
 app.get('/:url', function(req, res) {
     var url = req.params.url;
-    res.send('redirect to database entry for', url);
+    var result = 'redirect to entry for ' + url;
+    res.end(result);
 });
 
-app.listen(process.env.PORT || 8080);
+var port = process.env.PORT || 8080;
+app.listen(port);
+console.log('server listening on port', port, '...')
