@@ -6,34 +6,28 @@ var mongo = require('mongodb').MongoClient;
 var dburl = 'mongodb://cj:loser@ds011241.mlab.com:11241/links'
 
 app.get('/new/:url', function(req, res) {
-    var url = req.params.url;
+    var result = { original: req.params.url }
+        
 
-//   if (!/\./.test(url)) return res.end(JSON.stringify({ error: "check your URL format" }))
+   if (!/\./.test(result.original)) return res.end(JSON.stringify({ error: "check your URL format" }))
     
     mongo.connect(dburl, function(err, db) {
         if (err) return console.log(err);
+        
         var links = db.collection('links');
-        var maxShortened;
-        
-        maxShortened = links.find().sort({ shortened: -1 })
-        console.log(maxShortened);
-        db.close()
-        
-//        var maxshortened = db.links.find().sort({shortened: -1}).limit(1).shortened || 0;
-/*            
-        var result = {
-            original: url,
-            shortened: 'id'
-        };
-
-        links.insert(result, function(err) {
-            if (err) return res.sent(err);
+        links.find().sort({ shortened: -1}).toArray(function(err, docs) {
+            if (err) return console.error(err);
+            var maxShortened = docs[0].shortened;
+            result.shortened = maxShortened + 1;
+            
+            links.insert(result, function(err) {
+                if (err) return console.error(err);
+            });
+            
+            res.send(result);
             db.close();
         });
- */       
     });
-    
-    res.end(url);
 });
 
 app.get('/:id', function(req, res) {
